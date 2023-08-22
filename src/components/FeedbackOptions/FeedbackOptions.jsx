@@ -1,28 +1,27 @@
 import PropTypes from 'prop-types';
-import css from 'components/FeedbackOptions/FeedbackOptions.module.css';
 
-export const FeedbackOptions = ({options, onLeaveFeedback}) {
-  render() {
-    const zzz = 'neutral';
-    const { state, countGood, countBad, countNeutral } = this.props;
-    return (
-      <ul>
-        <li>
-          <button type="button" onClick={() => countGood(zzz)}>
-            good
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  const newOptions = Object.keys(options);
+  // console.log(newOptions);
+
+  return (
+    <div>
+      {newOptions.map(option => {
+        return (
+          <button
+            type="button"
+            key={option}
+            onClick={() => onLeaveFeedback(option)}
+          >
+            {option}
           </button>
-        </li>
-        <li>
-          <button type="button" onClick={countNeutral}>
-            neutral
-          </button>
-        </li>
-        <li>
-          <button type="button" onClick={countBad}>
-            bad
-          </button>
-        </li>
-      </ul>
-    );
-  }
-}
+        );
+      })}
+    </div>
+  );
+};
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.object.isRequired,
+  onLeaveFeedback: PropTypes.func,
+};
