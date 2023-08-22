@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   const newOptions = Object.keys(options);
-  // console.log(newOptions);
 
   return (
     <div>

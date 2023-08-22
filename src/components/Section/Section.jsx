@@ -1,10 +1,10 @@
 // import PropTypes from 'prop-types';
 
-export default function Section({ title, children }) {
+export const Section = ({ title, children }) => {
   return (
     <section>
       <h2>{title}</h2>
       {children}
     </section>
   );
-}
+};

@@ -1,9 +1,9 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Section from './Section/Section';
-import Statistics from './Statistics/Statistics';
+import { Section } from './Section/Section';
+import { Statistics } from './Statistics/Statistics';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
-// import { Notification } from 'components/Notification/Notification';
+import { Notification } from 'components/Notification/Notification';
 
 export class App extends Component {
   state = {
@@ -15,11 +15,22 @@ export class App extends Component {
     this.setState({ [option]: this.state[option] + 1 });
   };
 
-  // countTotalFeedback = () => {};
-  // countPositiveFeedbackPercentage = () => {};
+  countTotalFeedback = (good, bad, neutral) => {
+    return good + bad + neutral;
+  };
+  countPositiveFeedbackPercentage = (good, total) => {
+    let Percentage;
+    total === 0
+      ? (Percentage = 0)
+      : (Percentage = Math.round((good / total) * 100));
+    return Percentage;
+  };
 
   render() {
     const { good, bad, neutral } = this.state;
+
+    let total = this.countTotalFeedback(good, bad, neutral);
+    let positivePercentage = this.countPositiveFeedbackPercentage(good, total);
 
     return (
       <div>
@@ -29,15 +40,18 @@ export class App extends Component {
             onLeaveFeedback={this.addFeedback}
           ></FeedbackOptions>
         </Section>
-        <Section title="Statistics">
+        <Section title="Statistics"></Section>
+        {total > 0 ? (
           <Statistics
             good={good}
             neutral={neutral}
             bad={bad}
-            // total={}
-            // positivePercentage={}
+            total={total}
+            positivePercentage={positivePercentage}
           ></Statistics>
-        </Section>
+        ) : (
+          <Notification message={'There is no feedback'}></Notification>
+        )}
       </div>
     );
   }
